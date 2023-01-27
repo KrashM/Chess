@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from sprite_sheet import sprite_sheet
+from pieces import Pawn, Knight, Bishop, Rook, Queen, King, Color
 
 def decifer_FEN(fen_string, sheet, screen):
     x = y = i = 0
@@ -32,13 +33,13 @@ def main():
 
     for x in range(8):
         for y in range(8):
-            if (x + y) % 2:
-                pygame.draw.rect(screen, Color.Black, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-            else:
-                pygame.draw.rect(screen, Color.White, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            pygame.draw.rect(screen, Board_Color.Black if (x + y) % 2 else Board_Color.White, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
 
     sheet = sprite_sheet(SPRITE_SHEET_NAME)
     screen, to_move, can_castle, en_passant_exist, half_moves, full_moves = decifer_FEN(STARTING_POSITION, sheet, screen)
+    
+    myPiece = King(Color.Black)
+    print(myPiece.get_move_list())
 
     run = True
 
@@ -48,7 +49,14 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print("Mouse clicked")
+                mouse_state = pygame.mouse.get_pressed()
+                x, y = pygame.mouse.get_pos()
+                x = x // CELL_SIZE
+                y = y // CELL_SIZE
+                # TODO: Continue with the logic for moving pieces
+                if mouse_state[0]:
+                    pass
+                    # pygame.draw.rect(screen, Color.Black if (x + y) % 2 else Color.White, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
             if event.type == pygame.QUIT:
                 run = False
 

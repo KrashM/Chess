@@ -1,7 +1,7 @@
-class Color():
+class Board_Color:
     White = (255, 235, 200)
     Black = (255, 120, 80)
-    
+
 SPRITE_SHEET_NAME = 'assets/Chess_Pieces_Sprite.svg'
 STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
