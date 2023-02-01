@@ -1,20 +1,24 @@
 import pygame
 from settings import *
 from sprite_sheet import sprite_sheet
-from pieces import Pawn, Knight, Bishop, Rook, Queen, King, Color
+from board import Board
 
 def decifer_FEN(fen_string, sheet, screen):
     x = y = i = 0
+    board = Board()
     while fen_string[i] != ' ':
         if fen_string[i] == '/':
             y += 1
             x = 0
         elif fen_string[i] in PIECES:
             screen.blit(sheet.get_sprite(PIECES.index(fen_string[i])), (x * CELL_SIZE, y * CELL_SIZE))
+            board.set_piece(fen_string[i], x, y)
             x += 1
         else:
             x += int(fen_string[i])
         i += 1
+        
+    board.print_board()
 
     rest = fen_string[i :].split()
     to_move = rest[0] == 'w'
@@ -37,9 +41,6 @@ def main():
 
     sheet = sprite_sheet(SPRITE_SHEET_NAME)
     screen, to_move, can_castle, en_passant_exist, half_moves, full_moves = decifer_FEN(STARTING_POSITION, sheet, screen)
-    
-    myPiece = King(Color.Black)
-    print(myPiece.get_move_list())
 
     run = True
 
